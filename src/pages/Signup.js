@@ -1,6 +1,7 @@
-import { all } from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link,  useNavigate } from "react-router-dom";
+import RegisterAction from "../store/Actions/RegisterAction";
 
 const Signup = () => {
     const [newUser,setNewUser] = useState({
@@ -10,7 +11,16 @@ const Signup = () => {
         rePassword:''
     })
 
-    const [error,setError] = useState({})
+    const [error,setError] = useState({
+        userName:'',
+        email:'',
+        rePassword:''
+    })
+
+    const [duplicate,setDuplicate] = useState('')
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
 
     const handleForm = (e) => {
         let errorFound = false;
@@ -58,28 +68,32 @@ const Signup = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(newUser)
-        const allUser = localStorage.getItem('allUser')
-        allUser.forEach(user => {
-            if(user.email === newUser.email){
-                setError({
-                    ...error,
-                    duplicate: "Email Already Exist"
-                })
-            }else{
-                localStorage.setItem('allUser',[
-                    ...allUser,
-                    newUser
-                ])
-                
-            }
-        });
+        let allUser = JSON.parse(localStorage.getItem('allUser'))
+        if(!allUser){
+            const users = [
+                newUser
+            ];
+            localStorage.setItem('allUser',JSON.stringify(users))
+            dispatch(RegisterAction(newUser))
+            navigate('/')
+        }else if(allUser.some(user => user.email === newUser.email)){
+            setDuplicate('Email Already Exist')
+        }else{
+            localStorage.setItem('allUser',JSON.stringify([
+                ...allUser,
+                newUser
+            ]))
+            dispatch(RegisterAction(newUser))
+            navigate('/')
+        }
     }
+
 
 
 
     return (
         <div className="card mb-4" id="forms">
+
         <div className="card-body">
             <form onSubmit={handleSubmit}>
                 <div className="form-group row">
@@ -119,7 +133,9 @@ const Signup = () => {
                 </div>
                 <div className="form-group row">
                     <div className="col-sm-10">
-                    <button className="btn btn-primary" type="submit" disabled={Object.values(error).length > 0 ? true : false}>Sign Up</button>
+                    <button className="btn btn-primary" type="submit" disabled={Object.keys(error).length > 0 ? true : false}>Sign Up</button>
+
+                    <span className="text-danger"> {duplicate} </span>
                     </div>
                 </div>
                 <Link to='/login'>

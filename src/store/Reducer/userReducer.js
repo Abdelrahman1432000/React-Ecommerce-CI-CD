@@ -4,10 +4,15 @@ const INITAL_VALUE = {
 }
 
 const userReducer =  (state = INITAL_VALUE, action) => {
-    if(action.type=='REGISTER'){
+    if(action.type === 'REGISTER'){
+        return {
+            ...state,
+            user:action.payload,
+            isAuth:true
+        }
+    }else{
         return state
     }
-    return state
 };
 
 

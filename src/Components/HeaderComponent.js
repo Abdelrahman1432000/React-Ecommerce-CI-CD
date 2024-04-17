@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 
 const HeaderComponent = () => {
 
-    const isAuth = useSelector(state => state.isAuth);
+    const isAuth = useSelector(state => state.users.isAuth);
+    const user = useSelector(state => state.users.user);
+    const cartLength = useSelector(state => state.cart.cartProduct.length);
+    const wishListLength = useSelector(state => state.wishList.wishList.length);
+
     return (
     <header className="header bg-white">
         <div className="container px-0 px-lg-3">
@@ -19,18 +23,13 @@ const HeaderComponent = () => {
                 <li className="nav-item">
                     <a className="nav-link" href="shop.html">Shop</a>
                 </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="detail.html">Product detail</a>
-                </li>
-                <li className="nav-item dropdown"><a className="nav-link dropdown-toggle" id="pagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
-                    <div className="dropdown-menu mt-3" aria-labelledby="pagesDropdown"><a className="dropdown-item border-0 transition-link" href="index.html">Homepage</a><a className="dropdown-item border-0 transition-link" href="shop.html">Category</a><a className="dropdown-item border-0 transition-link" href="detail.html">Product detail</a><a className="dropdown-item border-0 transition-link" href="cart.html">Shopping cart</a><a className="dropdown-item border-0 transition-link" href="checkout.html">Checkout</a></div>
-                </li>
                 </ul>
                 <ul className="navbar-nav ml-auto">
                 {
                     isAuth ? (<>
-                    <li className="nav-item"><a className="nav-link" href="cart.html"> <i className="fas fa-dolly-flatbed mr-1 text-gray"></i>Cart<small className="text-gray">(2)</small></a></li>
-                    <li className="nav-item"><a className="nav-link" href="#"> <i className="far fa-heart mr-1"></i><small className="text-gray"> (0)</small></a></li>
+                    <li className="nav-item"><a className="nav-link" href="cart.html"> <i className="fas fa-dolly-flatbed mr-1 text-gray"></i>Cart<small className="text-gray">({cartLength})</small></a></li>
+                    <li className="nav-item"><a className="nav-link" href="#"> <i className="far fa-heart mr-1"></i><small className="text-gray"> ({wishListLength})</small></a></li>
+                    <span> welcome, <b>{user.userName}</b> </span>
                     </>) : (<li className="nav-item">
                     <Link to='/login' className="nav-link">
                         <i className="fas fa-user-alt mr-1 text-gray"></i>Login
