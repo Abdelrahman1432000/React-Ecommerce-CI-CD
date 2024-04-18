@@ -21,14 +21,19 @@ const HeaderComponent = () => {
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="shop.html">Shop</a>
+                    <Link className="nav-link" to='/shop'>Shop</Link>
                 </li>
                 </ul>
                 <ul className="navbar-nav ml-auto">
                 {
                     isAuth ? (<>
-                    <li className="nav-item"><a className="nav-link" href="cart.html"> <i className="fas fa-dolly-flatbed mr-1 text-gray"></i>Cart<small className="text-gray">({cartLength})</small></a></li>
-                    <li className="nav-item"><a className="nav-link" href="#"> <i className="far fa-heart mr-1"></i><small className="text-gray"> ({wishListLength})</small></a></li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to='/cart'> <i className="fas fa-dolly-flatbed mr-1 text-gray"></i>Cart<small className="text-gray">({cartLength})</small>
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to='/wishlist'> <i className="far fa-heart mr-1"></i><small className="text-gray"> ({wishListLength})</small></Link>
+                    </li>
                     <span> welcome, <b>{user.userName}</b> </span>
                     </>) : (<li className="nav-item">
                     <Link to='/login' className="nav-link">

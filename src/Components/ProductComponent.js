@@ -27,7 +27,6 @@ const ProductComponent = ({product,index}) => {
         if(isAuth){
             let index = wishListState.findIndex(item => item.id === product.id);
             if(index !== -1){
-                console.log(index)
                 wishListState.splice(index,1)
                 setWishListState([
                     ...wishListState
@@ -55,7 +54,7 @@ const ProductComponent = ({product,index}) => {
                   <div className="position-relative mb-3">
                     <div className="badge text-white badge-"></div>
                     <Link className="d-block" to={`/productDetails/${product.id}`}>
-                    <img className="img-fluid w-100" src={product.thumbnail} alt={product.title}/></Link>
+                    <img className="img-fluid w-100" width="100" height="100" src={product.thumbnail} alt={product.title}/></Link>
                     <div className="product-overlay">
                       <ul className="mb-0 list-inline">
                         <li className="list-inline-item m-0 p-0">

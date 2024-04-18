@@ -15,6 +15,14 @@ const WishListReducer = (state = INITAL_VALUE, action) => {
         return {
             ...state
         }
+    }else if (action.type === 'REMOVE_WISHLIST'){
+        let indexRemove = state.wishList.findIndex(item => item.id === action.payload.id)
+        if(indexRemove !== -1){
+            state.wishList.splice(indexRemove,1)
+        }
+        return {
+            ...state
+        }
     }else{
         return state
     }

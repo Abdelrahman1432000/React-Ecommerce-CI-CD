@@ -20,6 +20,14 @@ const CartReducer = (state = INITAL_VALUE , action) => {
                 cartProduct: state.cartProduct,
             }
         }
+    }else if (action.type === 'REMOVE_CART'){
+        let indexRemove = state.cartProduct.findIndex(item => item.product.title === action.payload.title)
+        if(indexRemove !== -1){
+            state.cartProduct.splice(indexRemove,1)
+        }
+        return {
+            cartProduct: state.cartProduct
+        }
     }else{
         return state
     }
